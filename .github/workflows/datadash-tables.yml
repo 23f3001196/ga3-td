@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: [23f3001196@ds.study.iitm.ac.in] Setup
+      - name: 23f3001196@ds.study.iitm.ac.in
         uses: actions/checkout@v4
       
       - name: Setup Node.js
@@ -15,14 +15,15 @@ jobs:
         with:
           node-version: '20'
       
-      - name: Install Playwright
-        run: npm init playwright@latest -- --yes
+      - name: Install Playwright & deps
+        run: |
+          npm init -y
+          npm install playwright
+          npx playwright install --with-deps
       
       - name: Run DataDash scraper
-        run: |
-          echo "file:scrape-tables.js" > playwright.config.js
-          npx playwright test scrape-tables.js
+        run: node scrape-tables.js
       
-      - name: Show results
-        if: always()
-        run: cat test-results/*.png || echo "Check logs above"
+      - name: Show total sum
+        run: echo "Check logs above for GRAND TOTAL"
+
